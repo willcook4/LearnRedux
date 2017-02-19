@@ -15,4 +15,5 @@ ReactDOM.render(
 );
 
 //Load Redux
+// require('./redux-example.jsx');
 require('./redux-todo-example.jsx');
