@@ -9,10 +9,10 @@ $(document).foundation();
 // Load CSS(sass)
 require('style-loader!css-loader!sass-loader!applicationStyles')
 
-ReactDOM.render(
-  <p>Boilerplate 3 Project</p>,
-  document.getElementById('app')
-);
+// ReactDOM.render(
+//   <p>Boilerplate 3 Project</p>,
+//   document.getElementById('app')
+// );
 
 //Load Redux
 // require('./redux-example.jsx');
