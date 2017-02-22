@@ -7,7 +7,7 @@ var {Route, Router, IndexRoute, hashHistory} = require('react-router');
 $(document).foundation();
 
 // Load CSS(sass)
-require('style!css!sass!applicationStyles')
+require('style-loader!css-loader!sass-loader!applicationStyles')
 
 ReactDOM.render(
   <p>Boilerplate 3 Project</p>,
