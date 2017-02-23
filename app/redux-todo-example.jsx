@@ -24,7 +24,7 @@ var reducer = (state = stateDefault, action) => {
 // Gets chrome redux extension working
   const store = redux.createStore(
    reducer, /* preloadedState, */
-   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
   );
 /* eslint-enable */
 
@@ -43,7 +43,6 @@ store.dispatch({
   type: 'CHANGE_SEARCH_TEXT',
   searchText: 'work'
 });
-console.log('searchText should be "work"', store.getState());
 
 store.dispatch({
   type: 'CHANGE_SEARCH_TEXT',
