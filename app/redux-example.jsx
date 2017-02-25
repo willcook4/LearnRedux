@@ -10,60 +10,110 @@ var stateDefault = {
 var nextHobbyId = 1;
 var nextMovieId = 1;
 
-var reducer = (state = stateDefault, action) => {
-  // state = state || {name: 'Annonymous'}; Default state, This is now above in ES6 syntax
-  // console.log('New Action', action);
+// var oldReducer = (state = stateDefault, action) => {
+//   // state = state || {name: 'Annonymous'}; Default state, This is now above in ES6 syntax
+//   // console.log('New Action', action);
+//   switch (action.type) {
+//   case 'CHANGE_NAME':
+//     return {
+//       ...state,
+//       name: action.name
+//     };
+//   case 'ADD_HOBBY':
+//     return {
+//       ...state,
+//       hobbies: [
+//         ...state.hobbies,
+//         {
+//           id: nextHobbyId++,
+//           hobbies: action.hobby
+//         }
+//       ]
+//     };
+//     case 'REMOVE_HOBBY':
+//       return {
+//         ...state,
+//         hobbies: state.hobbies.filter((hobby) => hobby.id !== action.id)
+//       };
+//     case 'ADD_MOVIE':
+//       return {
+//         ...state,
+//         movies: [
+//           ...state.movies,
+//           {
+//             id: nextMovieId++,
+//             movieName: action.movie.name,
+//             movieGenre: action.movie.genre
+//           }
+//         ]
+//       };
+//     case 'REMOVE_MOVIE':
+//       return {
+//         ...state,
+//         movies: state.movies.filter((movie) => movie.id !== action.id)
+//       };
+//     default:
+//       return state; // No changes to state, always returns a state.
+//   }
+// };
+
+const nameReducer = (state = 'Annonymous', action) => {
   switch (action.type) {
-  case 'CHANGE_NAME':
-    return {
-      ...state,
-      name: action.name
-    };
-  case 'ADD_HOBBY':
-    return {
-      ...state,
-      hobbies: [
-        ...state.hobbies,
+    case 'CHANGE_NAME':
+      return action.name;
+    default:
+      return state;
+  }
+};
+
+const hobbiesReducer = (state = [], action) => {
+  switch (action.type) {
+    case 'ADD_HOBBY':
+      return [
+        ...state,
         {
           id: nextHobbyId++,
           hobbies: action.hobby
         }
-      ]
-    };
+      ];
     case 'REMOVE_HOBBY':
-      return {
-        ...state,
-        hobbies: state.hobbies.filter((hobby) => hobby.id !== action.id)
-      };
-    case 'ADD_MOVIE':
-      return {
-        ...state,
-        movies: [
-          ...state.movies,
-          {
-            id: nextMovieId++,
-            movieName: action.movie.name,
-            movieGenre: action.movie.genre
-          }
-        ]
-      };
-    case 'REMOVE_MOVIE':
-      return {
-        ...state,
-        movies: state.movies.filter((movie) => movie.id !== action.id)
-      };
+      return state.filter((hobby) => hobby.id !== action.id);
     default:
-      return state; // No changes to state, always returns a state.
+      return state;
   }
 };
-/* eslint-disable no-underscore-dangle */
+
+const moviesReducer = (state= [], action) => {
+  switch(action.type) {
+    case 'ADD_MOVIE':
+      return [
+        ...state,
+        {
+          id: nextMovieId++,
+          movieName: action.movie.name,
+          movieGenre: action.movie.genre
+        }
+      ];
+    case 'REMOVE_MOVIE':
+      return state.filter((movie) => movie.id !== action.id);
+    default:
+      return state;
+  }
+};
+
+const reducer = redux.combineReducers({
+  name: nameReducer,
+  hobbies: hobbiesReducer,
+  movies: moviesReducer
+});
+
 
 // Gets chrome redux extension working
-  const store = redux.createStore(
-   reducer, /* preloadedState, */
-   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  );
-/* eslint-enable */
+const store = redux.createStore(
+ reducer, /* preloadedState, */
+ window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
+
 // var store = redux.createStore(reducer, redux.compose);
 
   // window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f
@@ -130,3 +180,4 @@ store.dispatch({
 });
 
 // console.log('Name should be Trevor', store.getState());
+
